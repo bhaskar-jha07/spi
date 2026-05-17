@@ -1,6 +1,10 @@
 # SPI (Verilog)
 
-8-bit Serial Peripheral Interface for Altera/Intel FPGAs, with selectable **master** or **slave** behavior in a single top-level module.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+**Description:** 8-bit Serial Peripheral Interface in Verilog for Altera/Intel FPGAs (Cyclone II / DE2), with a single top-level module that supports **master** or **slave** mode. Includes Quartus project files, DE2 pin assignments, and documentation for building and testing on hardware.
+
+8-bit SPI master/slave RTL with selectable `MODE`, Quartus II project files, and DE2 pin constraints for `EP2C35F672C8`.
 
 ## Overview
 
@@ -78,6 +82,14 @@ To build a slave image, set `MODE` to `"SLAVE"` in `assignment.v` (or override t
 
 Key SPI and control pins are defined in `assignment.qsf`, including `clk` (PIN_N2), `rst` (PIN_V2), `start` (PIN_N23), switch inputs `data_in[7:0]`, LED outputs `data_out[7:0]`, and GPIO for `sclk`, `cs`, `mosi`, and `miso`.
 
+## Community
+
+This project follows the [Contributor Covenant Code of Conduct](CODE_OF_CONDUCT.md).
+Please report unacceptable behavior to **bhaskar050828@gmail.com**.
+
 ## License
 
-See repository license terms for Quartus-generated project headers in `.qsf` / `.qpf`.
+This repository's Verilog and documentation are licensed under the [MIT License](LICENSE).
+
+Quartus-generated headers in `assignment.qsf` and `assignment.qpf` remain subject to
+Intel/Altera tool license terms when using Quartus II.
