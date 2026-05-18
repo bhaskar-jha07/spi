@@ -85,16 +85,7 @@ Simulation is configured for **ModelSim-Altera (Verilog)** in the project settin
 | `miso_out` | Output | Data to master |
 
 To build a slave image, set `MODE` to `"SLAVE"` in `assignment.v` (or override the parameter in a wrapper) before compilation.
-## Simulation Results
 
-The waveform below demonstrates successful SPI communication between the master and slave modules.
-
-- SPI Mode: 0
-- 8-bit data transfer
-- Correct MOSI/MISO operation
-- Active-low chip select behavior
-
-![SPI Waveform]("D:\New folder (2)\image\spi_waveform.png")
 
 ## Usage notes
 
