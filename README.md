@@ -90,7 +90,13 @@ To build a slave image, set `MODE` to `"SLAVE"` in `assignment.v` (or override t
 ## Usage notes
 
 - **Master start:** Assert `start` low in `IDLE` to begin an 8-bit transfer.
-- **Clock divider (master):** Each SCLK half-period lasts `CLK_DIV_VAL` cycles of `clk`. Approximate SCLK frequency:$$ \(f_{\mathrm{sclk}} \approx f_{\mathrm{clk}} / (2 \times \texttt{CLK\_DIV\_VAL})\)$$. The source file defaults to `4` for simulation; set `50_000_000` before FPGA synthesis on the DE2.
+- **Clock divider (master):** Each SCLK half-period lasts `CLK_DIV_VAL` cycles of `clk`.
+
+```math
+f_{sclk} \approx \frac{f_{clk}}{2 \times \mathrm{CLK\_DIV\_VAL}}
+```
+
+The source file defaults to `4` for simulation; set `50_000_000` before FPGA synthesis on the DE2.
 - **SPI mode:** Mode 0 (CPOL=0, CPHA=0), MSB first, active-low CS. MSB is driven when CS asserts; bits are sampled on SCLK rising edges and updated on falling edges.
 - **Slave:** Loads `data_in` when `cs_in` is high; shifts on `sclk_in` edges while `cs_in` is low.
 
