@@ -13,6 +13,7 @@ The `assignment` module shifts one byte over SPI. In master mode it generates `s
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `MODE` | `"MASTER"` | `"MASTER"` or `"SLAVE"` — only one generate block is synthesized |
+| `CLK_DIV_VAL` | `4` (sim) / `50_000_000` (hardware) | **Master only:** system clock cycles per SCLK half-period. Use a small value for fast simulation; use `50_000_000` on the DE2 at 50 MHz for slow, visible transfers. |
 
 ## Target hardware
 
@@ -75,7 +76,8 @@ To build a slave image, set `MODE` to `"SLAVE"` in `assignment.v` (or override t
 ## Usage notes
 
 - **Master start:** Assert `start` low in `IDLE` to begin an 8-bit transfer.
-- **Clock divider:** Master SCLK is derived from `clk` with `clk_div == 50_000_000` (intended for a ~50 MHz system clock; adjust for your board).
+- **Clock divider (master):** Each SCLK half-period lasts `CLK_DIV_VAL` cycles of `clk`. Approximate SCLK frequency: \(f_{\mathrm{sclk}} \approx f_{\mathrm{clk}} / (2 \times \texttt{CLK\_DIV\_VAL})\). The source file defaults to `4` for simulation; set `50_000_000` before FPGA synthesis on the DE2.
+- **SPI mode:** Mode 0 (CPOL=0, CPHA=0), MSB first, active-low CS.
 - **Slave:** Loads `data_in` when `cs_in` is high; shifts on `sclk_in` edges while `cs_in` is low.
 
 ## Pin assignments (DE2)
