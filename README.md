@@ -31,6 +31,19 @@ The `assignment` module shifts one byte over SPI. In master mode it generates `s
 | `assignment.v` | RTL top module |
 | `assignment.qsf` | Device settings, source file list, pin locations |
 | `assignment.qpf` | Quartus project file |
+| `tb_assignment.v` | ModelSim testbench (master ↔ slave loopback) |
+| `simulation/modelsim/assignment_run_msim_rtl_verilog.do` | ModelSim compile/run script |
+
+## Simulation
+
+From the repo root (or from `simulation/modelsim/` in ModelSim):
+
+```tcl
+cd simulation/modelsim
+do assignment_run_msim_rtl_verilog.do
+```
+
+The testbench instantiates master and slave `assignment` modules on a shared SPI bus and runs self-checking byte transfers. Waveforms are written to `simulation/modelsim/tb_assignment.vcd`. Ensure `CLK_DIV_VAL = 4` in `assignment.v` for fast simulation.
 
 ## Build
 
