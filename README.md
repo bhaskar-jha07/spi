@@ -13,7 +13,7 @@ The `assignment` module shifts one byte over SPI. In master mode it generates `s
 | Parameter | Default | Description |
 |-----------|---------|-------------|
 | `MODE` | `"MASTER"` | `"MASTER"` or `"SLAVE"` — only one generate block is synthesized |
-| `CLK_DIV_VAL` | `4` (sim) / `50_000_000` (hardware) | **Master only:** system clock cycles per SCLK half-period. Use a small value for fast simulation; use `50_000_000` on the DE2 at 50 MHz for slow, visible transfers. |
+| `CLK_DIV_VAL` | `4` with `+define+SIMULATION`, else `50_000_000` | **Master only:** system clock cycles per SCLK half-period |
 
 ## Target hardware
 
@@ -43,7 +43,7 @@ cd simulation/modelsim
 do assignment_run_msim_rtl_verilog.do
 ```
 
-The testbench instantiates master and slave `assignment` modules on a shared SPI bus and runs self-checking byte transfers. Waveforms are written to `simulation/modelsim/tb_assignment.vcd`. Ensure `CLK_DIV_VAL = 4` in `assignment.v` for fast simulation.
+The testbench instantiates master and slave `assignment` modules on a shared SPI bus and runs self-checking byte transfers (including MSB-first patterns). Waveforms are written to `simulation/modelsim/tb_assignment.vcd`. The ModelSim script compiles RTL with `+define+SIMULATION` for a fast clock divider.
 
 ## Build
 
@@ -90,7 +90,7 @@ To build a slave image, set `MODE` to `"SLAVE"` in `assignment.v` (or override t
 
 - **Master start:** Assert `start` low in `IDLE` to begin an 8-bit transfer.
 - **Clock divider (master):** Each SCLK half-period lasts `CLK_DIV_VAL` cycles of `clk`. Approximate SCLK frequency: \(f_{\mathrm{sclk}} \approx f_{\mathrm{clk}} / (2 \times \texttt{CLK\_DIV\_VAL})\). The source file defaults to `4` for simulation; set `50_000_000` before FPGA synthesis on the DE2.
-- **SPI mode:** Mode 0 (CPOL=0, CPHA=0), MSB first, active-low CS.
+- **SPI mode:** Mode 0 (CPOL=0, CPHA=0), MSB first, active-low CS. MSB is driven when CS asserts; bits are sampled on SCLK rising edges and updated on falling edges.
 - **Slave:** Loads `data_in` when `cs_in` is high; shifts on `sclk_in` edges while `cs_in` is low.
 
 ## Pin assignments (DE2)

@@ -8,7 +8,7 @@ vmap work rtl_work
 # Paths relative to this script (simulation/modelsim/)
 set RTL_DIR [file normalize [file join [file dirname [info script]] ../..]]
 
-vlog -vlog01compat -work work +incdir+$RTL_DIR [file join $RTL_DIR assignment.v]
+vlog -vlog01compat -work work +define+SIMULATION +incdir+$RTL_DIR [file join $RTL_DIR assignment.v]
 
 vlog -vlog01compat -work work +incdir+$RTL_DIR [file join $RTL_DIR tb_assignment.v]
 
