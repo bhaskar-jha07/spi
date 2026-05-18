@@ -94,7 +94,7 @@ The waveform below demonstrates successful SPI communication between the master 
 - Correct MOSI/MISO operation
 - Active-low chip select behavior
 
-![SPI Waveform](images/spi_waveform.png)
+![SPI Waveform](D:\New folder (2)\image\spi_waveform.png.png)
 
 ## Usage notes
 
